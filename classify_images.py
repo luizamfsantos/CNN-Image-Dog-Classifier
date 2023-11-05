@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/classify_images.py
 #                                                                             
-# PROGRAMMER: 
-# DATE CREATED:                                 
+# PROGRAMMER: Luiza Santos
+# DATE CREATED: 2023-11-01                                
 # REVISED DATE: 
 # PURPOSE: Create a function classify_images that uses the classifier function 
 #          to create the classifier labels and then compares the classifier 
@@ -63,6 +63,18 @@ def classify_images(images_dir, results_dic, model):
               classifier function to classify the pet images,
               values must be either: resnet alexnet vgg (string)
      Returns:
-           None - results_dic is mutable data type so no return needed.         
+           None - results_dic is mutable data type so no return needed.
     """
-    None 
+    # Loop through the results dictionary
+    for filename, value_list in results_dic.items():
+        # Get the classifier label
+        classifier_label = classifier(images_dir + filename, model).lower().strip()
+        # Append the classifier label to the value list
+        value_list.extend([classifier_label])
+        # Check if the pet image label is in the classifier label
+        if value_list[0] in classifier_label:
+            # Append the classifier label and 1 to the value list
+            value_list.extend([1])
+        else:
+            # Append the classifier label and 0 to the value list
+            value_list.extend([0])
