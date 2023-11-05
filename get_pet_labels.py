@@ -49,8 +49,8 @@ def get_pet_labels(image_dir):
     # Split the pet image labels by _ to get the words, then pop the last element and join the rest
     filename_list = [" ".join(x.split('_')[:-1]) for x in filename_list]
 
-    # Return a dictionary with the filename as key and the pet image label as value
-    results_dic = dict(zip(listdir(image_dir), filename_list))
+    # Create the results_dic using a dictionary comprehension
+    results_dic = {filename: [label] for filename, label in zip(listdir(image_dir), filename_list)}
 
     return results_dic
 
