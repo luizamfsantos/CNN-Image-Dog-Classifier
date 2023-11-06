@@ -71,26 +71,22 @@ def print_results(results_dic, results_stats_dic, model,
       f"Percentage of Correctly Classified \"Not-a\" Dog Images: {results_stats_dic['pct_correct_notdogs']}\n"
       f"Percentage of Correctly Classified Dog Breeds: {results_stats_dic['pct_correct_breed']}\n"
       f"Percentage of Correctly Classified Images: {results_stats_dic['pct_match']}")
-# Prints incorrectly classified dogs if user indicates print_incorrect_dogs
+	# Prints incorrectly classified dogs if user indicates print_incorrect_dogs
 	if print_incorrect_dogs:
-		counter = 0
-		for key in results_dic:
-			if sum(results_dic[key][3:]) == 1:
-				if counter == 0:
-					print("Incorrectly classified dogs:")
-				print("Pet image: {} - Classifier image: {}".format(results_dic[key][0], results_dic[key][1]))
-				counter += 1
-		if counter == 0:
+		if results_stats_dic['n_correct_dogs'] + results_stats_dic['n_correct_notdogs'] != results_stats_dic['n_images']:
+			print("Incorrectly classified dogs:")
+			for key in results_dic:
+				if sum(results_dic[key][3:]) == 1:
+					print("Pet image: {} - Classifier image: {}".format(results_dic[key][0], results_dic[key][1]))
+		else:
 			print("No incorrectly classified dogs.")
 	# Prints incorrectly classified breeds if user indicates print_incorrect_breed
 	if print_incorrect_breed:
-		counter = 0
-		for key in results_dic:
-			if sum(results_dic[key][3:]) == 2 and results_dic[key][2] == 0:
-				if counter == 0:
-					print("Incorrectly classified breeds:")
-				print("Pet image: {} - Classifier image: {}".format(results_dic[key][0], results_dic[key][1]))
-				counter += 1
-		if counter == 0:
+		if results_stats_dic['n_correct_dogs'] != results_stats_dic['n_correct_breed']:
+			print("Incorrectly classified breeds:")
+			for key in results_dic:
+				if sum(results_dic[key][3:]) == 2 and results_dic[key][2] == 0:
+					print("Pet image: {} - Classifier image: {}".format(results_dic[key][0], results_dic[key][1]))
+		else:
 			print("No incorrectly classified breeds.")
 
