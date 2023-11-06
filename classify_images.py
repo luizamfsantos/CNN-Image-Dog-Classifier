@@ -70,9 +70,6 @@ def classify_images(images_dir, results_dic, model):
         # Get the classifier label
         classifier_label = classifier(images_dir + key, model).lower().strip()
         # Check if the pet image label is in the classifier label
-        if results_dic[key][0] in classifier_label:
-            # Append the classifier label and 1 to the value list
-            results_dic[key].extend([classifier_label,1])
-        else:
-            # Append the classifier label and 0 to the value list
-            results_dic[key].extend([classifier_label,0])
+        match = 1 if results_dic[key][0] in classifier_label else 0
+        # Add the classifier label and the match to the results dictionary
+        results_dic[key].extend([classifier_label, match])
