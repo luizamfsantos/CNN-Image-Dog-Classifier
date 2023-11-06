@@ -95,7 +95,7 @@ def calculates_results_stats(results_dic):
 	results_stats_dic['n_correct_notdogs'] = correct_not_dogs
 
 	# calculate number of correct breed
-	correct_breed = sum(result[1] == result[0] for result in results_dic.values())
+	correct_breed = sum(result[2] and result[3] for result in results_dic.values())
 	results_stats_dic['n_correct_breed'] = correct_breed
 
 	# error handling for zero division
@@ -106,7 +106,7 @@ def calculates_results_stats(results_dic):
 		if dog_images > 0:
 			# calculate percentages of correct dogs and correct breed
 			results_stats_dic['pct_correct_dogs'] = (correct_dogs / dog_images) * 100
-			results_stats_dic['pct_correct_breed'] = (correct_breed / dog_images) * 100
+			results_stats_dic['pct_correct_breed'] = (correct_breed / correct_dogs) * 100
 		else:
 			results_stats_dic['pct_correct_dogs'] = 0
 			results_stats_dic['pct_correct_breed'] = 0

@@ -310,7 +310,7 @@ PetLabelDog: 1  ClassLabelDog: 1
 
  ** Statistics from calculates_results_stats() function:
 N Images: 40  N Dog Images: 30  N NotDog Images: 10 
-Pct Corr dog: 100.0 Pct Corr NOTdog:  90.0  Pct Corr Breed:  43.3
+Pct Corr dog: 100.0 Pct Corr NOTdog:  90.0  Pct Corr Breed:  90.0
 
  ** Check Statistics - calculated from this function as a check:
 N Images: 40  N Dog Images: 30  N NotDog Images: 10 
@@ -324,7 +324,7 @@ Number of Dog Images: 30
 Number of "Not-a" Dog Images: 10
 Percentage of Correctly Classified Dog Images: 100.0
 Percentage of Correctly Classified "Not-a" Dog Images: 90.0
-Percentage of Correctly Classified Dog Breeds: 43.333333333333336
+Percentage of Correctly Classified Dog Breeds: 90.0
 Percentage of Correctly Classified Images: 82.5
 Incorrectly classified dogs:
 Pet image: cat - Classifier image: norwegian elkhound, elkhound
@@ -333,4 +333,4 @@ Pet image: beagle - Classifier image: walker hound, walker foxhound
 Pet image: golden retriever - Classifier image: leonberg
 Pet image: great pyrenees - Classifier image: kuvasz
 
-** Total Elapsed Runtime: 0:0:1
+** Total Elapsed Runtime: 0:0:0
