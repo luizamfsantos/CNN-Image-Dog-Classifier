@@ -43,6 +43,9 @@ def get_pet_labels(image_dir):
     # Retrieve the filenames from folder pet_images/
     filename_list = listdir(image_dir)
 
+    # Filter out files starting with '.'
+    filename_list = [x for x in filename_list if not x.startswith('.')]
+
     # Modify the pet image labels to be all lower case
     filename_list = [x.lower() for x in filename_list]
 
