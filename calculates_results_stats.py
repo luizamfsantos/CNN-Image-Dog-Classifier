@@ -68,56 +68,56 @@ def calculates_results_stats(results_dic):
 			 and the previous topic Calculating Results in the class for details
 			 on how to calculate the counts and statistics.
 	"""
-	# initialize dictionary
+	# initialize the dictionary
 	results_stats_dic = {}
-	key_list = ["n_images", "n_dogs_img", "n_notdogs_img", "n_match", "n_correct_dogs", "n_correct_notdogs", "n_correct_breed", "pct_match", "pct_correct_dogs", "pct_correct_breed", "pct_correct_notdogs"]
-	
+
 	# calculate number of images
 	num_images = len(results_dic)
-	results_stats_dic[key_list[0]] = num_images
+	results_stats_dic['n_images'] = num_images
 
 	# calculate number of dog images
-	dog_images = [result[3] for result in results_dic.values()]
-	not_dog_images = [not is_dog for is_dog in dog_images]
+	dog_images = sum(result[3] for result in results_dic.values())
+	not_dog_images = num_images - dog_images
 
-	results_stats_dic[key_list[1]] = sum(dog_images)
-	results_stats_dic[key_list[2]] = sum(not_dog_images)
+	results_stats_dic['n_dogs_img'] = dog_images
+	results_stats_dic['n_notdogs_img'] = not_dog_images
 
 	# calculate number of matches
-	matches = [result[2] for result in results_dic.values()]
-	results_stats_dic[key_list[3]] = sum(matches)
+	matches = sum(result[2] for result in results_dic.values())
+	results_stats_dic['n_match'] = matches
 
 	# calculate number of correct dogs
-	correct_dog_matches = [result[3] and result[4] for result in results_dic.values()]
-	results_stats_dic[key_list[4]] = sum(correct_dog_matches)
+	correct_dogs = sum(result[3] and result[4] for result in results_dic.values())
+	results_stats_dic['n_correct_dogs'] = correct_dogs
 
 	# calculate number of correct not dogs
-	correct_not_dog_matches = [not result[3] and not result[4] for result in results_dic.values()]
-	results_stats_dic[key_list[5]] = sum(correct_not_dog_matches)
+	correct_not_dogs = sum(not result[3] and not result[4] for result in results_dic.values())
+	results_stats_dic['n_correct_notdogs'] = correct_not_dogs
 
-	# calculate number of correct breed matches
-	correct_breed_matches = [result[1] == result[0] for result in results_dic.values()]
-	results_stats_dic[key_list[6]] = sum(correct_breed_matches)
+	# calculate number of correct breed
+	correct_breed = sum(result[1] == result[0] for result in results_dic.values())
+	results_stats_dic['n_correct_breed'] = correct_breed
 
-	results_stats_dic[key_list[7]] = 0
-	# if-else to avoid division by zero
+	# error handling for zero division
 	if num_images > 0:
-		# calculate percentage of correct matches
-		results_stats_dic[key_list[7]] = (results_stats_dic[key_list[3]] / num_images) * 100
-		if results_stats_dic[key_list[1]] > 0:
-			# calculate percentage of correct dog matches
-			results_stats_dic[key_list[8]] = (results_stats_dic[key_list[4]] / results_stats_dic[key_list[1]]) * 100
-			# calculate percentage of correct breed matches
-			results_stats_dic[key_list[9]] = (results_stats_dic[key_list[6]] / results_stats_dic[key_list[1]]) * 100
-		else:
-			results_stats_dic[key_list[8]] = 0
-			results_stats_dic[key_list[9]] = 0
+		# calculate percentages of matches
+		results_stats_dic['pct_match'] = (matches / num_images) * 100
 
-		# calculate percentage of correct not dog matches
-		if results_stats_dic[key_list[2]] > 0:
-			results_stats_dic[key_list[10]] = (results_stats_dic[key_list[5]] / results_stats_dic[key_list[2]]) * 100
+		if dog_images > 0:
+			# calculate percentages of correct dogs and correct breed
+			results_stats_dic['pct_correct_dogs'] = (correct_dogs / dog_images) * 100
+			results_stats_dic['pct_correct_breed'] = (correct_breed / dog_images) * 100
 		else:
-			results_stats_dic[key_list[10]] = 0
-		
+			results_stats_dic['pct_correct_dogs'] = 0
+			results_stats_dic['pct_correct_breed'] = 0
+
+		if not_dog_images > 0:
+			# calculate percentages of correct not dogs
+			results_stats_dic['pct_correct_notdogs'] = (correct_not_dogs / not_dog_images) * 100
+		else:
+			results_stats_dic['pct_correct_notdogs'] = 0
+
+	else:
+		results_stats_dic['pct_match'] = 0
 
 	return results_stats_dic
