@@ -99,16 +99,25 @@ def calculates_results_stats(results_dic):
 	correct_breed_matches = [result[1] == result[0] for result in results_dic.values()]
 	results_stats_dic[key_list[6]] = sum(correct_breed_matches)
 
-	# calculate percentage of correct matches
-	results_stats_dic[key_list[7]] = (results_stats_dic[key_list[3]] / num_images) * 100
+	results_stats_dic[key_list[7]] = 0
+	# if-else to avoid division by zero
+	if num_images > 0:
+		# calculate percentage of correct matches
+		results_stats_dic[key_list[7]] = (results_stats_dic[key_list[3]] / num_images) * 100
+		if results_stats_dic[key_list[1]] > 0:
+			# calculate percentage of correct dog matches
+			results_stats_dic[key_list[8]] = (results_stats_dic[key_list[4]] / results_stats_dic[key_list[1]]) * 100
+			# calculate percentage of correct breed matches
+			results_stats_dic[key_list[9]] = (results_stats_dic[key_list[6]] / results_stats_dic[key_list[1]]) * 100
+		else:
+			results_stats_dic[key_list[8]] = 0
+			results_stats_dic[key_list[9]] = 0
 
-	# calculate percentage of correct dog matches
-	results_stats_dic[key_list[8]] = (results_stats_dic[key_list[4]] / results_stats_dic[key_list[1]]) * 100
-
-	# calculate percentage of correct breed matches
-	results_stats_dic[key_list[9]] = (results_stats_dic[key_list[6]] / results_stats_dic[key_list[1]]) * 100
-
-	# calculate percentage of correct not dog matches
-	results_stats_dic[key_list[10]] = (results_stats_dic[key_list[5]] / results_stats_dic[key_list[2]]) * 100
+		# calculate percentage of correct not dog matches
+		if results_stats_dic[key_list[2]] > 0:
+			results_stats_dic[key_list[10]] = (results_stats_dic[key_list[5]] / results_stats_dic[key_list[2]]) * 100
+		else:
+			results_stats_dic[key_list[10]] = 0
+		
 
 	return results_stats_dic
